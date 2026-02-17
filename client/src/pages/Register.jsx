@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -87,7 +88,6 @@ export default function Register() {
             >
               <option value="user">User</option>
               <option value="organizer">Organizer</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
 
@@ -101,9 +101,9 @@ export default function Register() {
 
         <p className="text-sm text-center text-gray-600 mt-6">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 font-medium">
+          <Link to="/login" className="text-indigo-600 font-medium">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

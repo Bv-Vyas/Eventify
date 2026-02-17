@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -81,9 +82,9 @@ export default function Login() {
 
         <p className="text-sm text-center text-gray-600 mt-6">
           Don’t have an account?{" "}
-          <a href="/register" className="text-indigo-600 font-medium">
-            Register
-          </a>
+          <Link to="/register" className="text-indigo-600 font-medium">
+            Login
+          </Link>
         </p>
       </div>
     </div>
