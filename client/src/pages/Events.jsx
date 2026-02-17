@@ -26,7 +26,7 @@ export default function Events() {
   };
 
   const handleBooking = async (eventId) => {
-    // 🔐 If not logged in
+    //If not logged in
     if (!token) {
       toast.info("Please login to book ticket 🎟️");
 
@@ -58,7 +58,7 @@ export default function Events() {
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-indigo-100 py-16 px-6">
       <h2 className="text-4xl font-extrabold text-center text-slate-800 mb-4">
-        🎉 Upcoming Events
+        Events
       </h2>
 
       <p className="text-center text-gray-500 mb-12">
