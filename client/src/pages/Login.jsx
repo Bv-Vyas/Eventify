@@ -1,15 +1,17 @@
 import { useState } from "react";
 import API from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false); // ✅ loading state
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,26 +19,21 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // ✅ start loading
+
     try {
       const res = await API.post("/auth/login", form);
+
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
-      toast.success("Login successful 🎉", {
-        onClose: () => {
-          // Redirect after toast closes
-          if (res.data.role === "organizer") {
-            navigate("/dashboard");
-          } else if (res.data.role === "admin") {
-            navigate("/dashboard");
-          } else {
-            navigate("/dashboard");
-          }
-        },
-      });
-      // redirect later based on role
-      // Role-based redirect
+
+      toast.success("Login successful 🎉");
+
+      navigate("/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed ❌");
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -74,9 +71,21 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+            disabled={loading}
+            className={`w-full py-2 rounded-lg transition text-white ${
+              loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
           >
-            Login
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Logging in...
+              </div>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 

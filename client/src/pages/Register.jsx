@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -14,23 +13,25 @@ export default function Register() {
     role: "user",
   });
 
+  const [loading, setLoading] = useState(false); // ✅ loading state
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // ✅ start loading
 
     try {
       await API.post("/auth/register", form);
-      toast.success("Registration successful 🎉", {
-        onClose: () => {
-          // Redirect after toast closes
-          navigate("/login");
-        },
-      });
+
+      toast.success("Registration successful 🎉");
+      navigate("/login");
     } catch (error) {
-      toast.error(err.response?.data?.message || "Registration failed ❌");
+      toast.error(error.response?.data?.message || "Registration failed ❌");
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -93,9 +94,21 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+            disabled={loading}
+            className={`w-full py-2 rounded-lg transition text-white ${
+              loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
           >
-            Register
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Registering...
+              </div>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 
