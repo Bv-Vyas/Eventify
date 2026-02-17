@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import HomeEventPage from "./pages/HomeEventPage";
 import ProtectedRoute from "./middleware/ProtectedRoute";
 import DashboardLayout from "./pages/DashboardLayout";
-import CreateEvent from "./pages/CreateEvents";
+import CreateEvent from "./components/organizer/CreateEvent";
 import AllEvents from "./components/AllEvents";
 import ApprovedEvents from "./components/ApprovedEvents";
 import PendingEvents from "./components/PendingEvents";

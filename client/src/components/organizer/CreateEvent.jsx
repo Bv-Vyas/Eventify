@@ -1,7 +1,7 @@
 import { useState } from "react";
-import API from "../api/axios";
+import API from "../../api/axios";
 
-export default function CreateEvents() {
+export default function CreateEvent() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
